@@ -81,4 +81,22 @@ There are **three** ways for a class to get an object it needs:
 - Reusability of `Car`. You can pass in different implementations of `Engine` to `Car`. For example, you might define a new subclass of `Engine` called `ElectricEngine` that you want `Car` to use. If you use DI, all you need to do is pass in an instance of the updated `ElectricEngine` subclass, and `Car` still works without any further changes.
 - Easy testing of `Car`. You can pass in test doubles to test your different scenarios. For example, you might create a test double of `Engine` called `FakeEngine` and configure it for different tests.
 ----------
+4. **When should Throwable be used instead of new Exception?**
+In the Java documentation, the Throwable class is defined as “the super-class of all errors and exceptions in the Java language“.The Throwable class has two direct sub-classes – namely, the Error and Exception classes.
 
+Error and its sub-classes are unchecked exceptions, while the sub-classes of Exception can be either checked or unchecked exceptions.
+ Recoverable Situations
+There are situations where recovery is generally possible and can be handled with either checked or unchecked sub-classes of the Exception class.
+
+For example, a program might want to use a file that happens to not exist at the specified location, resulting in a checked FileNotFoundException being thrown.
+
+Another example is the program attempting to access a system resource without having permission to do that, resulting in an unchecked AccessControlException being thrown.
+
+As per the Java documentation, the Exception class “indicates conditions that a reasonable application might want to catch“.
+
+ Irrecoverable Situations
+There are cases where a program can get in a state where recovery is impossible in an event of a failure. Common examples of this are when a stack overflow occurs or the JVM runs out of memory.
+
+In these situations, the JVM throws StackOverflowError and OutOfMemoryError, respectively. As suggested by their names, these are sub-classes of the Error class.
+
+According to the Java documentation, the Error class “indicates serious problems that a reasonable application should not try to catch“.
